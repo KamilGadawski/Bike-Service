@@ -28,7 +28,7 @@ namespace BikeService.Services
             }
             catch (DbUpdateException ex)
             {
-                throw new DbUpdateException("Error writing customer to database", ex);
+                throw new DbUpdateException("Cannot writing customer to database", ex);
             }
         }
 

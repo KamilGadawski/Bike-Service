@@ -58,11 +58,11 @@ namespace BikeService.Controllers
 
         // POST - UPDATE CUSTOMER
         [HttpPost]
-        public IActionResult Edit(Customer customer)
+        public async Task<IActionResult> Edit(Customer customer)
         {
             if (ModelState.IsValid)
             {
-                _customerServices.PostEditCustomer(customer);
+                await _customerServices.PostEditCustomer(customer);
                 return RedirectToAction("Index");
             }
             return View(customer);

@@ -11,7 +11,7 @@ namespace BikeService.Services
         IEnumerable<Customer> GetAllCustomers();
         Task AddCustomer(Customer customer);
         Task<Customer> GetEditCustomer(Guid id);
-        void PostEditCustomer(Customer customer);
+        Task PostEditCustomer(Customer customer);
         void RemoveCustomer(Guid id);
     }
 }

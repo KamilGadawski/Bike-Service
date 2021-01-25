@@ -21,10 +21,13 @@ namespace BikeService.Services
         {
             try
             {
-                customer.Id = Guid.NewGuid();
-                customer.DateTimeAdd = DateTime.Now;
-                _db.Customers.Add(customer);
-                await _db.SaveChangesAsync();
+                using (_db)
+                {
+                    customer.Id = Guid.NewGuid();
+                    customer.DateTimeAdd = DateTime.Now;
+                    _db.Customers.Add(customer);
+                    await _db.SaveChangesAsync();
+                }
             }
             catch (DbUpdateException ex)
             {
@@ -42,7 +45,10 @@ namespace BikeService.Services
         {
             try
             {
-                return await _db.Customers.FindAsync(id);
+                using (_db)
+                {
+                    return await _db.Customers.FindAsync(id);
+                }
             }
             catch (Exception ex)
             {
@@ -50,15 +56,19 @@ namespace BikeService.Services
             }
         }
 
-        public void PostEditCustomer(Customer customer)
+        public async Task PostEditCustomer(Customer customer)
         {
             try
             {
-                customer.DateTimeAdd = _db.Customers.AsNoTracking().Single(x => x.Id == customer.Id).DateTimeAdd;
-                customer.Edit = DateTime.Now;
+                using (_db)
+                {
+                    var addedTime = _db.Customers.AsNoTracking().Where(x => x.Id == customer.Id).First().DateTimeAdd;
+                    customer.DateTimeAdd = addedTime;
+                    customer.Edit = DateTime.Now;
 
-                _db.Customers.Update(customer);
-                _db.SaveChanges();
+                    _db.Customers.Update(customer);
+                    await _db.SaveChangesAsync();
+                }
             }
             catch (DbUpdateException ex)
             {

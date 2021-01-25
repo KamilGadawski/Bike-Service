@@ -9,7 +9,7 @@ namespace BikeService.Services
     public interface ICustomerServices
     {
         IEnumerable<Customer> GetAllCustomers();
-        void AddCustomer(Customer customer);
+        Task AddCustomer(Customer customer);
         Customer GetEditCustomer(Guid id);
         void PostEditCustomer(Customer customer);
         void RemoveCustomer(Guid id);

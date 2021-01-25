@@ -13,13 +13,6 @@ namespace BikeService.Controllers
     [AutoValidateAntiforgeryToken]
     public class CustomerController : Controller
     {
-        //private readonly AppDbContext _db;
-
-        //public CustomerController(AppDbContext db)
-        //{
-        //    _db = db;
-        //}
-
         private readonly ICustomerServices _customerServices;
         public CustomerController(ICustomerServices customerServices)
         {
@@ -40,11 +33,11 @@ namespace BikeService.Controllers
 
         // POST - CREATE CUSTOMER
         [HttpPost]
-        public IActionResult Create(Customer customer)
+        public async Task<IActionResult> Create(Customer customer)
         {
             if (ModelState.IsValid)
             {
-                _customerServices.AddCustomer(customer);
+                await _customerServices.AddCustomer(customer);
                 return RedirectToAction("Index");
             }
             return View(customer);

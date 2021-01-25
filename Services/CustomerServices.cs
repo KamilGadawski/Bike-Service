@@ -17,14 +17,14 @@ namespace BikeService.Services
             _db = db ?? throw new ArgumentNullException(nameof(db));
         }
 
-        public void AddCustomer(Customer customer)
+        public async Task AddCustomer(Customer customer)
         {
             try
             {
                 customer.Id = Guid.NewGuid();
                 customer.DateTimeAdd = DateTime.Now;
                 _db.Customers.Add(customer);
-                _db.SaveChanges();
+                await _db.SaveChangesAsync();
             }
             catch (DbUpdateException ex)
             {

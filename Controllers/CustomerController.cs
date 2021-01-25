@@ -44,9 +44,9 @@ namespace BikeService.Controllers
         }
 
         // GET - EDIT CUSTOMER
-        public IActionResult Edit(Guid Id)
+        public async Task<IActionResult> Edit(Guid Id)
         {
-            var customer = _customerServices.GetEditCustomer(Id);
+            var customer = await _customerServices.GetEditCustomer(Id);
 
             if (customer == null)
             {

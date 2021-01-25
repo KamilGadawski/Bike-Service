@@ -38,11 +38,11 @@ namespace BikeService.Services
             return customer;
         }
 
-        public Customer GetEditCustomer(Guid id)
+        public async Task<Customer> GetEditCustomer(Guid id)
         {
             try
             {
-                return _db.Customers.Find(id);
+                return await _db.Customers.FindAsync(id);
             }
             catch (Exception ex)
             {

@@ -25,7 +25,7 @@ namespace BikeService.Services
                 {
                     customer.Id = Guid.NewGuid();
                     customer.DateTimeAdd = DateTime.Now;
-                    _db.Customers.Add(customer);
+                    await _db.Customers.AddAsync(customer);
                     await _db.SaveChangesAsync();
                 }
             }
@@ -35,10 +35,19 @@ namespace BikeService.Services
             }
         }
 
-        public IEnumerable<Customer> GetAllCustomers()
+        public async Task<IEnumerable<Customer>> GetAllCustomers()
         {
-            IEnumerable<Customer> customer = _db.Customers.OrderByDescending(x => x.DateTimeAdd);
-            return customer;
+            try
+            {
+                using (_db)
+                {
+                    return await _db.Customers.ToListAsync();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Cannot get all customers from database", ex);
+            }
         }
 
         public async Task<Customer> GetEditCustomer(Guid id)

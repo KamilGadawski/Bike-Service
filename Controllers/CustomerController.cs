@@ -19,10 +19,10 @@ namespace BikeService.Controllers
             _customerServices = customerServices;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var customers = _customerServices.GetAllCustomers();
-            return View(customers);
+            var customers = await _customerServices.GetAllCustomers();
+            return View(customers.OrderByDescending(x => x.DateTimeAdd));
         }
 
         // GET - CREATE CUSTOMER

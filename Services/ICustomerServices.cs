@@ -8,7 +8,7 @@ namespace BikeService.Services
 {
     public interface ICustomerServices
     {
-        IEnumerable<Customer> GetAllCustomers();
+        Task<IEnumerable<Customer>> GetAllCustomers();
         Task AddCustomer(Customer customer);
         Task<Customer> GetEditCustomer(Guid id);
         Task PostEditCustomer(Customer customer);

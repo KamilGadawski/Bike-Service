@@ -48,7 +48,7 @@ namespace BikeService.Controllers
         {
             var customer = await _customerServices.GetEditCustomer(Id);
 
-            if (customer == null)
+            if (customer is null)
             {
                 return NotFound();
             }
@@ -68,9 +68,9 @@ namespace BikeService.Controllers
             return View(customer);
         }
 
-        public IActionResult Delete(Guid Id)
+        public async Task<IActionResult> Delete(Guid Id)
         {
-            _customerServices.RemoveCustomer(Id);
+            await _customerServices.RemoveCustomer(Id);
 
             return RedirectToAction("Index");
         }

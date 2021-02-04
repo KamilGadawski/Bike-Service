@@ -4,14 +4,16 @@ using BikeService.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BikeService.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210204125653_v1")]
+    partial class v1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -50,8 +52,6 @@ namespace BikeService.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CustomerID");
 
                     b.ToTable("Bikes");
 
@@ -94,6 +94,9 @@ namespace BikeService.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid?>("BikeId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<DateTime>("DateTimeAdd")
                         .HasColumnType("datetime2");
 
@@ -119,6 +122,8 @@ namespace BikeService.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("BikeId");
 
                     b.ToTable("Customers");
 
@@ -155,15 +160,16 @@ namespace BikeService.Migrations
                         });
                 });
 
+            modelBuilder.Entity("BikeService.Models.Customer", b =>
+                {
+                    b.HasOne("BikeService.Models.Bike", null)
+                        .WithMany("Repairs")
+                        .HasForeignKey("BikeId");
+                });
+
             modelBuilder.Entity("BikeService.Models.Bike", b =>
                 {
-                    b.HasOne("BikeService.Models.Customer", "Customer")
-                        .WithMany()
-                        .HasForeignKey("CustomerID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Customer");
+                    b.Navigation("Repairs");
                 });
 #pragma warning restore 612, 618
         }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -32,6 +33,7 @@ namespace BikeService.Models
         [DataType(DataType.DateTime)]
         public DateTime AddedBike { get; set; }
 
-        public ICollection<Customer> Repairs { get; set; } = new List<Customer>();
+        [ForeignKey("CustomerID")]
+        public Customer Customer { get; set; }
     }
 }

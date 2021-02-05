@@ -1,0 +1,60 @@
+﻿@model IEnumerable<BikeService.Models.Bike>
+
+@{
+    ViewData["Title"] = "Bikes";
+}
+
+<div class="container p-3">
+    <div class="row pt-4">
+        <div class="col-6">
+            <h2 class="text-primary">Bike List</h2>
+        </div>
+        <div class="col-6 text-right">
+            <a class="btn btn-primary" asp-controller="Bike" asp-action="Create">
+                <i class="far fa-plus-square"></i> &nbsp; Add new Bike
+            </a>
+        </div>
+    </div>
+    <br />
+
+    @if (Model.Count() > 0)
+    {
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Brand</th>
+                    <th>Model</th>
+                    <th>Size</th>
+                    <th>Description</th>
+                    <th>Added</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.Brand</td>
+                        <td>@item.Model</td>
+                        <td>@item.Size</td>
+                        <td>@item.Description</td>
+                        <td>@item.AddedBike</td>
+                        <td class="text-center">
+                            <div class="w-75 btn-group" role="group">
+                                <a class="btn btn-info mx-1" asp-route-Id="@item.Id" asp-controller="Bike" asp-action="Edit">
+                                    <i class="far fa-edit"></i>
+                                </a>
+                                <a class="btn btn-danger mx-1" asp-route-Id="@item.Id" asp-controller="Bike" asp-action="Delete">
+                                    <i class="far fa-trash-alt"></i>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p>No Bike exist</p>
+    }
+</div>

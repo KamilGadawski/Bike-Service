@@ -8,7 +8,7 @@ namespace BikeService.Services
 {
     public interface IBikeServices
     {
-        Task<IEnumerable<Bike>> GetAllBike();
+        Task<IEnumerable<Bike>> GetAllBikes();
         Task AddBike();
         Task<Bike> EditBike(Guid id);
         Task PostEditBike(Bike bike);

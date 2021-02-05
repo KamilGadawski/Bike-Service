@@ -32,6 +32,7 @@ namespace BikeService
                 Configuration.GetConnectionString("ConnStringDefaultDEV")));
 
             services.AddScoped<ICustomerServices, CustomerServices>();
+            services.AddScoped<IBikeServices, BikeServices>();
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
         }
 

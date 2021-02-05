@@ -89,15 +89,18 @@ namespace BikeService.Services
         {
             try
             {
-                var customer = await _db.Customers.FindAsync(id);
-
-                if (customer is null)
+                using (_db)
                 {
-                    throw new Exception("Cannot find Customer.");
-                }
+                    var customer = await _db.Customers.FindAsync(id);
 
-                _db.Customers.Remove(customer);
-                await _db.SaveChangesAsync();
+                    if (customer is null)
+                    {
+                        throw new Exception("Cannot find Customer.");
+                    }
+
+                    _db.Customers.Remove(customer);
+                    await _db.SaveChangesAsync();
+                }
             }
             catch (DbUpdateException ex)
             {

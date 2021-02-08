@@ -32,9 +32,14 @@ namespace BikeService.Services
             }
         }
 
-        public Task AddBike()
+        public async Task<List<Customer>> AddBike()
         {
-            throw new NotImplementedException();
+            List<Customer> customerList = new List<Customer>();
+
+            customerList = await ( from customer in _db.Customers
+                            select customer).ToListAsync();
+
+            return customerList;
         }
 
         public Task<Bike> EditBike(Guid id)

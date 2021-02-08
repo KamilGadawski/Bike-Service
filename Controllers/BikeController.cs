@@ -23,8 +23,10 @@ namespace BikeService.Controllers
             return View(bikes.OrderByDescending(x => x.AddedBike));
         }
 
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
+            var customers = await _bikeServices.AddBike();
+            ViewBag.ListOfCustomers = customers;
             return View();
         }
     }

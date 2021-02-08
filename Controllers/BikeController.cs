@@ -1,4 +1,5 @@
-﻿using BikeService.Services;
+﻿using BikeService.Models;
+using BikeService.Services;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -20,6 +21,11 @@ namespace BikeService.Controllers
         {
             var bikes = await _bikeServices.GetAllBikes();
             return View(bikes.OrderByDescending(x => x.AddedBike));
+        }
+
+        public IActionResult Create()
+        {
+            return View();
         }
     }
 }

@@ -14,7 +14,7 @@ namespace BikeService.Controllers
         private readonly IBikeServices _bikeServices;
         public BikeController(IBikeServices bikeServices)
         {
-            _bikeServices= bikeServices;
+            _bikeServices = bikeServices;
         }
 
         public async Task<IActionResult> Index()
@@ -27,6 +27,18 @@ namespace BikeService.Controllers
         {
             var customers = await _bikeServices.AddBike();
             ViewBag.ListOfCustomers = customers;
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create(Bike bike)
+        {
+            if (ModelState.IsValid)
+            {
+                await _bikeServices.AddBike(bike);
+                return Redirect("Index");
+            }
+
             return View();
         }
     }

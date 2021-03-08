@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BikeService.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20210204125653_v1")]
-    partial class v1
+    [Migration("20210308191328_updateBikeModelFK")]
+    partial class updateBikeModelFK
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -94,9 +94,6 @@ namespace BikeService.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("BikeId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<DateTime>("DateTimeAdd")
                         .HasColumnType("datetime2");
 
@@ -122,8 +119,6 @@ namespace BikeService.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("BikeId");
 
                     b.ToTable("Customers");
 
@@ -158,18 +153,6 @@ namespace BikeService.Migrations
                             Surname = "Kowalsky",
                             TelephoneNumber = "434567891"
                         });
-                });
-
-            modelBuilder.Entity("BikeService.Models.Customer", b =>
-                {
-                    b.HasOne("BikeService.Models.Bike", null)
-                        .WithMany("Repairs")
-                        .HasForeignKey("BikeId");
-                });
-
-            modelBuilder.Entity("BikeService.Models.Bike", b =>
-                {
-                    b.Navigation("Repairs");
                 });
 #pragma warning restore 612, 618
         }

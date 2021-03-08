@@ -42,6 +42,24 @@ namespace BikeService.Services
             return customerList;
         }
 
+        public async Task AddBike(Bike bike)
+        {
+            try
+            {
+                using (_db)
+                {
+                    bike.Id = Guid.NewGuid();
+                    bike.AddedBike = DateTime.Now;
+                    await _db.Bikes.AddAsync(bike);
+                    await _db.SaveChangesAsync();
+                }
+            }
+            catch (DbUpdateException ex)
+            {
+                throw new DbUpdateException("Cannot writing bike to database", ex);
+            }
+        }
+
         public Task<Bike> EditBike(Guid id)
         {
             throw new NotImplementedException();

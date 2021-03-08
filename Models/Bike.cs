@@ -27,13 +27,11 @@ namespace BikeService.Models
         [MaxLength(50)]
         public string Model { get; set; }
 
+        [ForeignKey("CustomerID")]
         public Guid CustomerID { get; set; }
 
         [Required]
         [DataType(DataType.DateTime)]
         public DateTime AddedBike { get; set; }
-
-        [ForeignKey("CustomerID")]
-        public Customer Customer { get; set; }
     }
 }

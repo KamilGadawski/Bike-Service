@@ -51,8 +51,6 @@ namespace BikeService.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CustomerID");
-
                     b.ToTable("Bikes");
 
                     b.HasData(
@@ -153,17 +151,6 @@ namespace BikeService.Migrations
                             Surname = "Kowalsky",
                             TelephoneNumber = "434567891"
                         });
-                });
-
-            modelBuilder.Entity("BikeService.Models.Bike", b =>
-                {
-                    b.HasOne("BikeService.Models.Customer", "Customer")
-                        .WithMany()
-                        .HasForeignKey("CustomerID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Customer");
                 });
 #pragma warning restore 612, 618
         }

@@ -60,19 +60,44 @@ namespace BikeService.Services
             }
         }
 
-        public Task<Bike> EditBike(Guid id)
+        public async Task<Bike> EditBike(Guid id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                using (_db)
+                {
+                    return await _db.Bikes.FindAsync(id);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Cannot find Bike.", ex);
+            }
         }
 
-        public Task PostEditBike(Bike bike)
+        public async Task PostEditBike(Bike bike)
         {
-            throw new NotImplementedException();
+            try
+            {
+                using (_db)
+                {
+                    DateTime addedTime = _db.Bikes.AsNoTracking().Where(x => x.Id == bike.Id).First().AddedBike;
+                    bike.AddedBike = addedTime;
+
+                    _db.Bikes.Update(bike);
+                    await _db.SaveChangesAsync();
+                }
+            }
+            catch (DbUpdateException ex)
+            {
+                throw new DbUpdateException("Cannot update customer.", ex);
+            }
         }
 
         public Task RemoveBike(Guid id)
         {
             throw new NotImplementedException();
         }
+
     }
 }

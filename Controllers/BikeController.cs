@@ -41,5 +41,28 @@ namespace BikeService.Controllers
 
             return View();
         }
+
+        public async Task<IActionResult> Edit(Guid Id)
+        {
+            var bike = await _bikeServices.EditBike(Id);
+
+            if (bike is null)
+            {
+                return NotFound();
+            }
+
+            return View(bike);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(Bike bike)
+        {
+            if (ModelState.IsValid)
+            {
+                await _bikeServices.PostEditBike(bike);
+                return RedirectToAction("Index");
+            }
+            return View(bike);
+        }
     }
 }

@@ -94,9 +94,27 @@ namespace BikeService.Services
             }
         }
 
-        public Task RemoveBike(Guid id)
+        public async Task RemoveBike(Guid id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                using (_db)
+                {
+                    var bike = await _db.Bikes.FindAsync(id);
+
+                    if (bike is null)
+                    {
+                        throw new Exception("Cannot find Bike.");
+                    }
+
+                    _db.Bikes.Remove(bike);
+                    await _db.SaveChangesAsync();
+                }
+            }
+            catch (DbUpdateException ex)
+            {
+                throw new DbUpdateException("Cannot remove bike from database.", ex);
+            }
         }
 
     }

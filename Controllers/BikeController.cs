@@ -64,5 +64,12 @@ namespace BikeService.Controllers
             }
             return View(bike);
         }
+
+        public async Task<IActionResult> Delete(Guid Id)
+        {
+            await _bikeServices.RemoveBike(Id);
+
+            return RedirectToAction("Index");
+        }
     }
 }
